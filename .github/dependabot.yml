@@ -4,6 +4,18 @@ updates:
     directory: /
     schedule:
       interval: daily
+    groups:
+      actions-deps:
+        patterns:
+          - '@actions/*'
+      types:
+        patterns:
+          - '@types/*'
+      eslint:
+        patterns:
+          - '@redhat-actions/eslint-config'
+          - '@typescript-eslint/*'
+          - eslint
 
   - package-ecosystem: github-actions
     directory: /

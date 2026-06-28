@@ -1,6 +1,3 @@
-# This workflow will perform a test whenever there
-# is some change in code done to ensure that the changes
-# are not buggy and we are getting the desired output.
 name: Build from containerfile
 on:
   push:
@@ -13,8 +10,28 @@ env:
   IMAGE_NAME: "hello-world"
 
 jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    outputs:
+      action: ${{ steps.filter.outputs.action }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        id: filter
+        with:
+          filters: |
+            action:
+              - 'src/**'
+              - 'dist/**'
+              - 'action.yml'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.github/workflows/containerfile_build.yml'
+
   build:
     name: Build image using Buildah
+    needs: changes
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -23,7 +40,6 @@ jobs:
 
     steps:
 
-      # Checkout buildah action github repository
       - name: Checkout Buildah action
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -41,7 +57,6 @@ jobs:
           RUN echo "hello world"
           EOF
 
-      # Build image using Buildah action
       - name: Build Image
         id: build_image
         uses: ./buildah-build/
@@ -61,6 +76,5 @@ jobs:
           echo "Tagged Image: ${{ steps.build_image.outputs.image-with-tag }}"
           echo "Image Digest: ${{ steps.build_image.outputs.digest }}"
 
-      # Check if image is build
       - name: Check images created
         run: buildah images | grep '${{ env.IMAGE_NAME }}'

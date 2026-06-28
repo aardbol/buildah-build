@@ -12,8 +12,28 @@ env:
   IMAGE_TAG: latest
 
 jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    outputs:
+      action: ${{ steps.filter.outputs.action }}
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+        id: filter
+        with:
+          filters: |
+            action:
+              - 'src/**'
+              - 'dist/**'
+              - 'action.yml'
+              - 'package.json'
+              - 'package-lock.json'
+              - '.github/workflows/multiarch.yml'
+
   build-multiarch-containerfile:
     name: Build multi-architecture image using Containerfile
+    needs: changes
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     env:
       IMAGE_NAME: hello-world-multiarch
     runs-on: ubuntu-24.04
@@ -24,7 +44,6 @@ jobs:
 
     steps:
 
-      # Checkout buildah action github repository
       - name: Checkout Buildah action
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -57,7 +76,7 @@ jobs:
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: latest v1
-          archs: amd64                    # Single arch testcase
+          archs: amd64
           containerfiles: |
             ./Containerfile
 
@@ -82,6 +101,8 @@ jobs:
 
   build-multiplatform-containerfile:
     name: Build multi-platform image using Containerfile
+    needs: changes
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     env:
       IMAGE_NAME: hello-world-multiplatform
     runs-on: ubuntu-24.04
@@ -92,7 +113,6 @@ jobs:
 
     steps:
 
-      # Checkout buildah action github repository
       - name: Checkout Buildah action
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -149,6 +169,8 @@ jobs:
 
   build-multiarch-scratch:
     name: Build multi-architecture image from scratch
+    needs: changes
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     env:
       IMAGE_NAME: spring-petclinic-multiarch
     runs-on: ubuntu-24.04
@@ -159,7 +181,6 @@ jobs:
 
     steps:
 
-      # Checkout buildah action github repository
       - name: Checkout Buildah action
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
@@ -175,14 +196,12 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y qemu-user-static
 
-      # Checkout spring-petclinic github repository
       - name: Checkout spring-petclinic project
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
         with:
           repository: "spring-projects/spring-petclinic"
           path: ${{ env.PROJECT_DIR }}
 
-      # Setup java.
       - name: Setup Java
         uses: actions/setup-java@1bcf9fb12cf4aa7d266a90ae39939e61372fe520 # v5.4.0
         with:
@@ -190,7 +209,6 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
-      # Run maven to build the project
       - name: Maven
         working-directory: ${{ env.PROJECT_DIR }}
         run: |
@@ -202,9 +220,8 @@ jobs:
         with:
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ env.IMAGE_TAG }}
-          base-image: 'registry.access.redhat.com/openjdk/openjdk-11-rhel7'
+          base-image: 'registry.access.redhat.com/ubi9/openjdk-17:latest'
           archs: amd64, i386, ppc64le
-          # To avoid hardcoding a particular version of the binary.
           content: |
             ./spring-petclinic/target/spring-petclinic-*.jar
           entrypoint: |
