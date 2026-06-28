@@ -1,13 +1,15 @@
 # buildah-build
-[![CI checks](https://github.com/redhat-actions/buildah-build/workflows/CI%20checks/badge.svg)](https://github.com/redhat-actions/buildah-build/actions?query=workflow%3A%22CI+checks%22)
-[![Build](https://github.com/redhat-actions/buildah-build/workflows/Build/badge.svg)](https://github.com/redhat-actions/buildah-build/actions?query=workflow%3ABuild)
-[![Build from containerfile](https://github.com/redhat-actions/buildah-build/workflows/Build%20from%20containerfile/badge.svg)](https://github.com/redhat-actions/buildah-build/actions?query=workflow%3A%22Build+from+containerfile%22)
-[![Link checker](https://github.com/redhat-actions/buildah-build/workflows/Link%20checker/badge.svg)](https://github.com/redhat-actions/buildah-build/actions?query=workflow%3A%22Link+checker%22)
+[![CI checks](https://github.com/aardbol/buildah-build/actions/workflows/ci.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/ci.yml)
+[![Build](https://github.com/aardbol/buildah-build/actions/workflows/scratch_build.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/scratch_build.yml)
+[![Build from containerfile](https://github.com/aardbol/buildah-build/actions/workflows/containerfile_build.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/containerfile_build.yml)
+[![CodeQL](https://github.com/aardbol/buildah-build/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/codeql-analysis.yml)
+[![Trivy](https://github.com/aardbol/buildah-build/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/trivy-scan.yml)
+[![Link checker](https://github.com/aardbol/buildah-build/actions/workflows/link_check.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/link_check.yml)
 <br>
 <br>
-[![tag badge](https://img.shields.io/github/v/tag/redhat-actions/buildah-build)](https://github.com/redhat-actions/buildah-build/tags)
-[![license badge](https://img.shields.io/github/license/redhat-actions/buildah-build)](./LICENSE)
-[![size badge](https://img.shields.io/github/size/redhat-actions/buildah-build/dist/index.js)](./dist)
+[![tag badge](https://img.shields.io/github/v/tag/aardbol/buildah-build)](https://github.com/aardbol/buildah-build/tags)
+[![license badge](https://img.shields.io/github/license/aardbol/buildah-build)](./LICENSE)
+[![size badge](https://img.shields.io/github/size/aardbol/buildah-build/dist/index.js)](./dist)
 
 Buildah Build is a GitHub Action for building Docker and Kubernetes-compatible images quickly and easily.
 
@@ -125,13 +127,13 @@ on: [push]
 jobs:
   build:
     name: Build image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Buildah Action
-      uses: redhat-actions/buildah-build@v2
+      uses: aardbol/buildah-build@v3.0.1
       with:
         image: my-new-image
         tags: v1 ${{ github.sha }}
@@ -165,23 +167,23 @@ on: [push]
 jobs:
   build-image:
     name: Build image without Containerfile
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
     - uses: actions/checkout@v4
 
     - run: mvn package
 
-    - name: Build Image
-      uses: redhat-actions/buildah-build@v2
-      with:
-        base-image: docker.io/fabric8/java-alpine-openjdk11-jre
-        image: my-new-image
-        tags: v1
-        content: |
-          target/spring-petclinic-2.3.0.BUILD-SNAPSHOT.jar
-        entrypoint: java -jar spring-petclinic-2.3.0.BUILD-SNAPSHOT.jar
-        port: 8080
+      - name: Build Image
+        uses: aardbol/buildah-build@v3.0.1
+        with:
+          base-image: docker.io/fabric8/java-alpine-openjdk11-jre
+          image: my-new-image
+          tags: v1
+          content: |
+            target/spring-petclinic-2.3.0.BUILD-SNAPSHOT.jar
+          entrypoint: java -jar spring-petclinic-2.3.0.BUILD-SNAPSHOT.jar
+          port: 8080
 ```
 
 <a id="multi-arch-builds"></a>
