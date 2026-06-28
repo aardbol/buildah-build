@@ -30,7 +30,7 @@
     "@eslint/js": "^10.0.1",
     "@redhat-actions/action-io-generator": "1.5.0",
     "@redhat-actions/tsconfig": "1.2.0",
-    "@types/ini": "1.3.31",
+    "@types/ini": "4.1.1",
     "@types/node": "^26.0",
     "@typescript-eslint/eslint-plugin": "8.62.0",
     "@typescript-eslint/parser": "8.62.0",
