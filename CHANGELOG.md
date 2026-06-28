@@ -1,5 +1,15 @@
 # buildah-build Changelog
 
+## v3.0.1
+- Update runner images to ubuntu-24.04.
+- Pin all actions by commit SHA.
+- Bump actions to latest versions:
+  - `actions/checkout` to v7.0.0
+  - `actions/setup-node` to v6.4.0
+  - `actions/setup-java` to v5.4.0
+  - `docker/metadata-action` to v6.1.0
+  - `gaurav-nelson/github-action-markdown-link-check` to 1.0.17
+
 ## v3.0
 - Update action to run on Node24. [#154](https://github.com/redhat-actions/buildah-build/pull/154)
 - Add `digest` output for the built image. [#153](https://github.com/redhat-actions/buildah-build/pull/153)
