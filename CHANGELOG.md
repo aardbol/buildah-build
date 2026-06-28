@@ -1,5 +1,10 @@
 # buildah-build Changelog
 
+## v3.0
+- Update action to run on Node24. [#154](https://github.com/redhat-actions/buildah-build/pull/154)
+- Add `digest` output for the built image. [#153](https://github.com/redhat-actions/buildah-build/pull/153)
+- Update dependencies. [#150](https://github.com/redhat-actions/buildah-build/pull/150)
+
 ## v2.13
 - Update action to run on Node20. https://github.blog/changelog/2023-09-22-github-actions-transitioning-from-node-16-to-node-20/
 
