@@ -7,7 +7,7 @@
   "description": "Action for building OCI-compatible images using buildah",
   "repository": {
     "type": "git",
-    "url": "https://github.com/redhat-actions/buildah-build"
+    "url": "https://github.com/aardbol-actions/buildah-build"
   },
   "main": "dist/index.js",
   "scripts": {
@@ -27,16 +27,16 @@
     "ini": "7.0.0"
   },
   "devDependencies": {
+    "@aardbol-actions/action-io-generator": "2.0.0",
+    "@aardbol-actions/tsconfig": "2.0.0",
     "@eslint/js": "^10.0.1",
-    "@redhat-actions/action-io-generator": "1.5.0",
-    "@redhat-actions/tsconfig": "1.2.0",
     "@types/ini": "4.1.1",
     "@types/node": "^26.0",
     "@typescript-eslint/eslint-plugin": "8.62.0",
     "@typescript-eslint/parser": "8.62.0",
     "@vercel/ncc": "0.44.0",
     "eslint": "10.6.0",
-    "typescript": "5.2.2",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.62.0"
   }
 }

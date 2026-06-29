@@ -1,16 +1,16 @@
 # buildah-build
-[![CI checks](https://github.com/aardbol/buildah-build/actions/workflows/ci.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/ci.yml)
-[![Build](https://github.com/aardbol/buildah-build/actions/workflows/scratch_build.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/scratch_build.yml)
-[![Build from containerfile](https://github.com/aardbol/buildah-build/actions/workflows/containerfile_build.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/containerfile_build.yml)
-[![CodeQL](https://github.com/aardbol/buildah-build/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/codeql-analysis.yml)
-[![Trivy](https://github.com/aardbol/buildah-build/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/trivy-scan.yml)
-[![Link checker](https://github.com/aardbol/buildah-build/actions/workflows/link_check.yml/badge.svg)](https://github.com/aardbol/buildah-build/actions/workflows/link_check.yml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/aardbol/buildah-build/badge)](https://securityscorecards.dev/viewer/?uri=github.com/aardbol/buildah-build)
+[![CI checks](https://github.com/aardbol-actions/buildah-build/actions/workflows/ci.yml/badge.svg)](https://github.com/aardbol-actions/buildah-build/actions/workflows/ci.yml)
+[![Build](https://github.com/aardbol-actions/buildah-build/actions/workflows/scratch_build.yml/badge.svg)](https://github.com/aardbol-actions/buildah-build/actions/workflows/scratch_build.yml)
+[![Build from containerfile](https://github.com/aardbol-actions/buildah-build/actions/workflows/containerfile_build.yml/badge.svg)](https://github.com/aardbol-actions/buildah-build/actions/workflows/containerfile_build.yml)
+[![CodeQL](https://github.com/aardbol-actions/buildah-build/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/aardbol-actions/buildah-build/actions/workflows/codeql-analysis.yml)
+[![Trivy](https://github.com/aardbol-actions/buildah-build/actions/workflows/trivy-scan.yml/badge.svg)](https://github.com/aardbol-actions/buildah-build/actions/workflows/trivy-scan.yml)
+[![Link checker](https://github.com/aardbol-actions/buildah-build/actions/workflows/link_check.yml/badge.svg)](https://github.com/aardbol-actions/buildah-build/actions/workflows/link_check.yml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/aardbol-actions/buildah-build/badge)](https://securityscorecards.dev/viewer/?uri=github.com/aardbol-actions/buildah-build)
 <br>
 <br>
-[![tag badge](https://img.shields.io/github/v/tag/aardbol/buildah-build)](https://github.com/aardbol/buildah-build/tags)
-[![license badge](https://img.shields.io/github/license/aardbol/buildah-build)](./LICENSE)
-[![size badge](https://img.shields.io/github/size/aardbol/buildah-build/dist/index.js)](./dist)
+[![tag badge](https://img.shields.io/github/v/tag/aardbol-actions/buildah-build)](https://github.com/aardbol-actions/buildah-build/tags)
+[![license badge](https://img.shields.io/github/license/aardbol-actions/buildah-build)](./LICENSE)
+[![size badge](https://img.shields.io/github/size/aardbol-actions/buildah-build/dist/index.js)](./dist)
 
 Buildah Build is a GitHub Action for building Docker and Kubernetes-compatible images quickly and easily.
 
@@ -134,7 +134,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Buildah Action
-      uses: aardbol/buildah-build@v3.0.1
+      uses: aardbol-actions/buildah-build@v3.0.1
       with:
         image: my-new-image
         tags: v1 ${{ github.sha }}
@@ -176,7 +176,7 @@ jobs:
     - run: mvn package
 
       - name: Build Image
-        uses: aardbol/buildah-build@v3.0.1
+        uses: aardbol-actions/buildah-build@v3.0.1
         with:
           base-image: docker.io/fabric8/java-alpine-openjdk11-jre
           image: my-new-image
