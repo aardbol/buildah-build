@@ -3,8 +3,9 @@ on:
   push:
   pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+
+permissions:
+  contents: read
 
 env:
   PROJECT_DIR: spring-petclinic
@@ -33,7 +34,7 @@ jobs:
   build:
     name: Build image using Buildah
     needs: changes
-    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false

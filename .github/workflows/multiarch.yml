@@ -3,8 +3,9 @@ on:
   push:
   pull_request:
   workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'  # every day at midnight
+
+permissions:
+  contents: read
 
 env:
   PROJECT_DIR: spring-petclinic
@@ -33,7 +34,7 @@ jobs:
   build-multiarch-containerfile:
     name: Build multi-architecture image using Containerfile
     needs: changes
-    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'workflow_dispatch' }}
     env:
       IMAGE_NAME: hello-world-multiarch
     runs-on: ubuntu-24.04
@@ -102,7 +103,7 @@ jobs:
   build-multiplatform-containerfile:
     name: Build multi-platform image using Containerfile
     needs: changes
-    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'workflow_dispatch' }}
     env:
       IMAGE_NAME: hello-world-multiplatform
     runs-on: ubuntu-24.04
@@ -170,7 +171,7 @@ jobs:
   build-multiarch-scratch:
     name: Build multi-architecture image from scratch
     needs: changes
-    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
+    if: ${{ needs.changes.outputs.action == 'true' || github.event_name == 'workflow_dispatch' }}
     env:
       IMAGE_NAME: spring-petclinic-multiarch
     runs-on: ubuntu-24.04
