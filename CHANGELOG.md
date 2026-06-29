@@ -1,5 +1,15 @@
 # buildah-build Changelog
 
+## v3.0.2
+- Migrate from `redhat-actions` namespace to `aardbol-actions`:
+  - Update all `@redhat-actions/*` devDependencies to `@aardbol-actions/*`
+  - Update CI bundle-verifier and action-io-generator actions to `aardbol-actions/common`
+  - Update repository URL and all badge links to `aardbol-actions/buildah-build`
+- Bump TypeScript from `5.2.2` to `^6.0.3`
+- Migrate ESLint config from `@redhat-actions/eslint-config` to `typescript-eslint` flat config
+- Bump dependencies: `ini` to `7.0.0`, `@vercel/ncc` to `0.44.0`, `eslint` to `10.6.0`, `@types/node` to `^26.0`
+- Add security workflows: CodeQL, Trivy, Scorecard, dependabot, link checker
+
 ## v3.0.1
 - Update runner images to ubuntu-24.04.
 - Pin all actions by commit SHA.
